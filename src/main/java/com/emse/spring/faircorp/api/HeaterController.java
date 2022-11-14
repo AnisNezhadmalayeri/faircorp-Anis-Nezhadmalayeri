@@ -1,6 +1,7 @@
 package com.emse.spring.faircorp.api;
 import com.emse.spring.faircorp.dao.HeaterDao;
 import com.emse.spring.faircorp.dto.HeaterDto;
+import com.emse.spring.faircorp.dto.WindowDto;
 import com.emse.spring.faircorp.model.Heater;
 import com.emse.spring.faircorp.model.Room;
 import com.emse.spring.faircorp.dao.RoomDao;
@@ -9,8 +10,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@CrossOrigin
 @RestController
-@RequestMapping("api/heater")
+@RequestMapping("/api/rooms/{room_id}/heater")
 public class HeaterController {
 
     private HeaterDao heaterDao;
@@ -22,8 +24,8 @@ public class HeaterController {
     }
 
     @GetMapping
-    public List<HeaterDto> findAll() {
-        return heaterDao.findAll().stream().map(HeaterDto::new).collect(Collectors.toList());
+    public List<HeaterDto> findByRoomId(@PathVariable Long room_id) {
+        return heaterDao.findByRoomId(room_id).stream().map(HeaterDto::new).collect(Collectors.toList());
     }
 
     @GetMapping(path = "/{id}")
@@ -45,8 +47,9 @@ public class HeaterController {
     }
 
     @PostMapping
-    public HeaterDto create(@RequestBody HeaterDto heaterDto) {
-        Room room = roomDao.getReferenceById(heaterDto.getRoomId());
+    public HeaterDto create(@PathVariable Long room_id, @RequestBody HeaterDto heaterDto) throws Exception {
+        Room room = roomDao.getReferenceById(room_id);
+        if(room == null) throw new Exception();
         Heater heater = null;
         if (heaterDto.getId() == null) {
             heater = heaterDao.save(new Heater(heaterDto.getName(), heaterDto.getHeaterStatus(), heaterDto.getPower(), room));

@@ -23,7 +23,7 @@ public class RoomController {
 
     @GetMapping(path = "/{id}")
     public RoomDto findById(@PathVariable Long id) {
-        return roomDao.findById(id).map(RoomDto::new).orElse(null); // (7)
+        return roomDao.findById(id).map(RoomDto::new).orElse(null);
     }
 
     @DeleteMapping(path = "/{id}")

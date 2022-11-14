@@ -9,8 +9,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@CrossOrigin
 @RestController
-@RequestMapping("api/window")
+@RequestMapping("/api/rooms/{room_id}/window")
 public class WindowController {
     private WindowDao windowDao;
     private RoomDao roomDao;
@@ -21,8 +22,8 @@ public class WindowController {
     }
 
     @GetMapping
-    public List<WindowDto> findAll() {
-        return windowDao.findAll().stream().map(WindowDto::new).collect(Collectors.toList());
+    public List<WindowDto> findByRoomId(@PathVariable Long room_id) {
+        return windowDao.findByRoomId(room_id).stream().map(WindowDto::new).collect(Collectors.toList());
     }
 
     @GetMapping(path = "/{id}")
@@ -44,8 +45,9 @@ public class WindowController {
     }
 
     @PostMapping
-    public WindowDto create(@RequestBody WindowDto windowDto) {
-        Room room = roomDao.getReferenceById(windowDto.getRoomId());
+    public WindowDto create(@PathVariable Long room_id, @RequestBody WindowDto windowDto) throws Exception {
+        Room room = roomDao.getReferenceById(room_id);
+        if(room == null) throw new Exception();
         Window window = null;
         if (windowDto.getId() == null) {
             window = windowDao.save(new Window(windowDto.getName(), windowDto.getWindowStatus(), room));

@@ -12,9 +12,6 @@ public class RoomDto {
     private String name;
     private Double current_temperature;
     private Double target_temperature;
-    private List<Heater> heater;
-    private List<Window> window;
-
 
     public RoomDto() {
     }
@@ -25,8 +22,6 @@ public class RoomDto {
         this.floor = room.getFloor();
         this.current_temperature = room.getCurrent_temperature();
         this.target_temperature = room.getTarget_temperature();
-        this.heater = room.getHeater();
-        this.window = room.getWindow();
     }
 
     public Long getId() {
@@ -64,17 +59,4 @@ public class RoomDto {
         this.target_temperature = target_temperature;
     }
 
-    public List<Heater> getHeater() {
-        return heater;
-    }
-    public void setHeater(List<Heater> heater) {
-        this.heater = heater;
-    }
-
-    public List<Window> getWindow() {
-        return window;
-    }
-    public void setWindow(List<Window> window) {
-        this.window = window;
-    }
 }

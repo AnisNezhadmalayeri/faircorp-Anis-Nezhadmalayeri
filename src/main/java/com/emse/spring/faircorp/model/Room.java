@@ -71,15 +71,15 @@ public class Room {
     public List<Heater> getHeater() {
         return heater;
     }
-    public void setHeater(List<Heater> heater) {
-        this.heater = heater;
-    }
-
+//    public void setHeater(List<Heater> heater) {
+//        this.heater = heater;
+//    }
+//
     public List<Window> getWindow() {
         return window;
     }
-    public void setWindow(List<Window> window) {
-        this.window = window;
-    }
+//    public void setWindow(List<Window> window) {
+//        this.window = window;
+//    }
 
 }
